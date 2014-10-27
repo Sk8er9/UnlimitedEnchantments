@@ -1,0 +1,58 @@
+package com.sk8er9.unlimitedenchants1;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.enchantments.EnchantmentWrapper;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class Menu extends JavaPlugin implements Listener {
+	public static Inventory inv;
+	public void onEnable() {
+		inv = Bukkit.createInventory(null, 18, "UnlimitedEnchants");
+		
+	}
+	int swordeffect1 = 16;
+	int swordeffect2 = 19;
+	int pickeffect1 = 32;
+	int unbreakingid = 34;
+	int level = 10000;
+	public ItemStack dpick(){
+		ItemStack dpick = new ItemStack(Material.DIAMOND_PICKAXE);
+		Enchantment pickench = new EnchantmentWrapper(pickeffect1);
+		Enchantment pickench2 = new EnchantmentWrapper(unbreakingid);
+		dpick.addUnsafeEnchantment(pickench, level);
+		dpick.addUnsafeEnchantment(pickench2, level);
+	   return dpick;	
+	}
+	public ItemStack dsword(){
+		ItemStack dsword = new ItemStack(Material.DIAMOND_SWORD);
+		Enchantment swordench = new EnchantmentWrapper(swordeffect1);
+		Enchantment swordench2 = new EnchantmentWrapper(swordeffect2);
+		Enchantment swordench3 = new EnchantmentWrapper(unbreakingid);
+		dsword.addUnsafeEnchantment(swordench, level);
+		dsword.addUnsafeEnchantment(swordench2, level);
+		dsword.addUnsafeEnchantment(swordench3, level);
+	   return dsword;
+	}
+	
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if(label.equalsIgnoreCase("uenchants")) {
+			if(sender instanceof Player) {
+				((Player)sender).openInventory(inv);
+				inv.clear();
+				inv.setItem(1, this.dpick());
+				inv.setItem(2, this.dsword());
+			}
+		}
+		return false;
+	}
+		
+}
